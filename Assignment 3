@@ -1,0 +1,171 @@
+##Paige Brooks
+##301426363
+##Assignment 3
+##Question 1: ask_int1
+import turtle
+import a2
+def is_int(n):
+    """ Returns True of n is an int, and False otherwise.
+    >>> is_int('5')
+    True
+    >>> is_int('5.6')
+    False
+    """
+    try:
+        int(n)
+        return True
+    except ValueError:
+        return False
+##Asks the user for an integer, repeatedly asking until a valid int is entered.
+def ask_int1(prompt):
+##If the input is valid, convert it to int and return. Or eprint the prompt if the input is not a valid integer
+    while True:
+        user_input = input(prompt)
+        if is_int(user_input):
+            return int(user_input)  
+        else:
+            print(prompt)  
+##Example
+age = ask_int1('How old are you? ')
+print(f'age is {age}')
+##Question 2: ask_int2
+##Asks the user for an integer, printing an error message if input is invalid.
+def ask_int2(prompt):
+    while True:
+        user_input = input(prompt)
+        if is_int(user_input):
+            return int(user_input)  
+        else:
+            print(f'Sorry, I don’t know what int "{user_input}" is. Please try again.')
+
+##Example
+age = ask_int2('How old are you? ')
+print()
+print(f'age is {age}')
+##Question 3: ask_int_between
+##Asks the user to enter an integer between lo and hi. Continues to prompt until a valid integer within the range is entered.
+def ask_int_between(lo, hi): 
+    while True:
+        user_input = input(f'Enter a number between {lo} and {hi}: ')
+        if is_int(user_input):
+            num = int(user_input)
+            if num < lo:
+                print(f'Please try again: {num} is too low.')
+            elif num > hi:
+                print(f'Please try again: {num} is too high.')
+            else:
+                return num  
+        else:
+            print(f'Sorry, I don’t know what int "{user_input}" is. Please try again.')
+##Example
+num = ask_int_between(3, 8)
+print()
+print(f'num is {num}')
+##Question 4: Turtles love pentagons
+##Draws a regular pentagon with the bottom-left vertex at (x, y) and side length of size.
+##The turtle ends up back at the starting position and facing the same direction.
+def pentagon_at(x, y, size):
+##Move to the starting position without drawing
+    turtle.penup()
+    turtle.goto(x, y)
+    turtle.pendown()
+ ##Angle for a regular pentagon
+    angle = 72  
+  ##Draw the pentagon
+    for _ in range(5):
+        turtle.forward(size)
+        turtle.left(angle)
+  ##Return the turtle to the starting point, facing original direction
+    turtle.penup()
+    turtle.goto(x, y)
+    turtle.pendown()
+##Example
+turtle.speed(1) 
+pentagon_at(0, 0, 100)  
+##Question 5: A pentagonal flower
+##Prompts the user to enter an integer between lo and hi. Keeps asking until valid input is received.
+def ask_int_between(lo, hi):
+    while True:
+        user_input = input(f'Enter a number between {lo} and {hi}: ')
+        try:
+            num = int(user_input)
+            if lo <= num <= hi:
+                return num
+            else:
+                if num < lo:
+                    print(f'Please try again: {num} is too low.')
+                else:
+                    print(f'Please try again: {num} is too high.')
+        except ValueError:
+            print(f'Sorry, I don’t know what int "{user_input}" is. Please try again.')
+## Draws a regular pentagon with the bottom-left vertex at (x, y) and side length of size.
+def pentagon_at(x, y, size):
+    turtle.penup()
+    turtle.goto(x, y)
+    turtle.pendown()
+    angle = 72  
+    for _ in range(5):
+        turtle.forward(size)
+        turtle.left(angle)
+##Draws a flower made of n pentagons, each with side length size, starting at (x, y).
+# Get the number of pentagons to draw
+def pentagonal_flower(x, y, size):
+    n = ask_int_between(5, 50) 
+    for i in range(n):
+        pentagon_at(x, y, size)
+        turtle.right(360 / n) 
+    turtle.hideturtle()  
+## Hide the turtle after drawing is complete
+##Example
+turtle.speed(0)  
+pentagonal_flower(0, 0, 100)
+##Question 6: Re-using a stick figure
+##Draw a stick figure of the given size at the current turtle position.
+##Call stick_figure from a2.py
+def draw_figure_rand(size):
+    a2.stick_figure(size)  
+##Example
+turtle.speed(1) 
+draw_figure_rand(100)  
+##Question 7: A row of stick figures
+##Draws a horizontal row of n stick figures, starting at (x, y).
+def figure_row(x, y, n):
+###Get screen width for spacing,Calculate figure size so they fit without going off the screen
+    screen_width = turtle.window_width()  
+    figure_size = screen_width // (n + 2)  
+    turtle.penup()
+    turtle.goto(x, y)
+    turtle.pendown()
+##Draw n stick figures in a row
+    for i in range(n):
+        a2.stick_figure(figure_size)
+### Move to the next position without drawing then move right by 1.5x the figure size for spacing
+        turtle.penup() 
+        turtle.forward(figure_size * 1.5)
+        turtle.pendown()
+# Example
+turtle.speed(0)
+figure_row(-300, -200, 10)
+##
+##Draws a horizontal row of n stick figures starting at (x, y).
+def figure_row(x, y, n, figure_size):
+    turtle.penup()
+    turtle.goto(x, y)
+    turtle.pendown()
+    for _ in range(n):
+        a2.stick_figure(figure_size)  
+        turtle.penup()
+        turtle.forward(figure_size * 1.5)  
+        turtle.pendown()
+##Draws a rectangular grid of stick figures with r rows and c columns.
+def figure_grid(x, y, r, c):
+    screen_width = turtle.window_width()
+    screen_height = turtle.window_height()
+##Set figure size so that at least 5 rows and 10 columns can fit
+    figure_size = min(screen_width // (c + 2), screen_height // (r + 2))
+    for i in range(r):
+        figure_row(x, y - (i * figure_size * 2), c, figure_size)
+##Example
+turtle.speed(0)
+figure_grid(-300, 200, 5, 10)
+
